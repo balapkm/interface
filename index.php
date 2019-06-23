@@ -164,7 +164,7 @@ if(count($_GET) > 0)
                <a class="navbar-brand" href="#">Interface</a>
             </div>
             <ul class="nav navbar-nav">
-               <li class="active"><a href="#">IOCL Database Interface</a></li>
+               <li class="active"><a href="#">IOCL Interface</a></li>
             </ul>
          </div>
       </nav>
