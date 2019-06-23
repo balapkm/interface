@@ -9,7 +9,7 @@ def generateCMDForServer(serverName){
     def COMMAND = ""
 
     if(serverName == "DEV") {
-        def dest_dir = DEV_DEST;
+        def dest_dir = "$DEV_DEST";
     }
 
     def changeLogSets = currentBuild.changeSets
