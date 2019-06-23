@@ -130,7 +130,7 @@ node {
          */
         
         println "Send Email Notification for start Job"
-        def body = """Hi team,
+        body = """Hi team,
     The Job Name (${env.JOB_NAME} - ${env.BUILD_NUMBER}) is started successfully and refer below link about this job
     
     ${env.BUILD_URL}
@@ -146,7 +146,7 @@ node {
          */
         
         println "Send Email Notification team leader for apporval of file movement of development server.."
-        def body = """Hi Team Leader,
+        body = """Hi Team Leader,
     Kindly review current version code and approve the file movement of development server?
 
     Commit Changes - ${env.BUILD_URL}changes
@@ -181,7 +181,7 @@ node {
          */
         
         println "Success Messagae..!!"
-        def body = """Hi Team Leader,
+        body = """Hi Team Leader,
     File Moved Successfully in development server
 
     Console Log - ${env.BUILD_URL}console
@@ -197,7 +197,7 @@ node {
          */
         
         println "Send Email Notification Manager for apporval of file movement of testing server.."
-        def body = """Dear Manager,
+        body = """Dear Manager,
     Kindly approve the file movement of testing server?
 
     Commit Changes - ${env.BUILD_URL}changes
@@ -232,7 +232,7 @@ node {
          */
         
         println "Success Messagae..!!"
-        def body = """Hi Team Leader,
+        body = """Hi Team Leader,
     File Moved Successfully in Testing server
 
     Console Log - ${env.BUILD_URL}console
@@ -248,7 +248,7 @@ node {
          */
         
         println "Send Email Notification Testing Team for apporval of file movement of UAT server.."
-        def body = """Dear Testing Team,
+        body = """Dear Testing Team,
     Kindly approve the file movement of UAT server?
 
     Commit Changes - ${env.BUILD_URL}changes
@@ -283,7 +283,7 @@ node {
          */
         
         println "Success Messagae..!!"
-        def body = """Hi Testing Team,
+        body = """Hi Testing Team,
     File Moved Successfully in UAT server
 
     Console Log - ${env.BUILD_URL}console
@@ -299,7 +299,7 @@ node {
          */
         
         println "Send Email Notification Client for apporval of file movement of LIVE server.."
-        def body = """Dear Client,
+        body = """Dear Client,
     Kindly approve the file movement of LIVE server?
 
     Commit Changes - ${env.BUILD_URL}changes
@@ -334,7 +334,7 @@ node {
          */
         
         println "Success Messagae..!!"
-        def body = """Dear Client,
+        body = """Dear Client,
     File Moved Successfully in Live server
 
     Console Log - ${env.BUILD_URL}console
