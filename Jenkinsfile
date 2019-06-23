@@ -53,7 +53,7 @@ def generateCMDForServer(serverName){
  * @return      void
  */
 
-def sendEmailNotification(subject,body){
+def sendEmailNotification(subject,body,serverName){
 
     /**
      * Dev server Configuration
@@ -102,7 +102,7 @@ node {
            '${env.JOB_NAME} ${env.BUILD_NUMBER}' is started successfully and refer below console output
            ${env.BUILD_URL}
         """
-        sendEmailNotification("Start Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body)
+        sendEmailNotification("Start Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 
     stage("last-changes") {
