@@ -9,8 +9,9 @@ def generateCMDForServer(serverName){
     def COMMAND = ""
     if(serverName == "DEV") {
         def dest_dir = "$DEV_DEST";
+        println "$dest_dir";
     }
-
+    println "$dest_dir";
     def changeLogSets = currentBuild.changeSets
     for (int i = 0; i < changeLogSets.size(); i++) {
         def entries = changeLogSets[i].items
