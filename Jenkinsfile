@@ -109,14 +109,6 @@ node {
         println "$DEV_CMD"
 
         /**
-         * approval for move file for development server
-         */
-        
-        timeout(time: 5, unit: 'DAYS') {
-            input message: 'Kindly review current version code and approve the file movement of development server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
-        }
-
-        /**
          * Send Email Notification for team leader for apporval
          */
         
@@ -127,6 +119,14 @@ node {
     Approve/Reject - ${env.BUILD_URL}/input
         """
         sendEmailNotification("Development Server approval - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
+
+        /**
+         * approval for move file for development server
+         */
+        
+        timeout(time: 5, unit: 'DAYS') {
+            input message: 'Kindly review current version code and approve the file movement of development server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
+        }
     }
 
     stage("Move to server") {
