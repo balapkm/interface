@@ -28,6 +28,14 @@ node {
                 }
             }
         }
+    }
+
+    stage("Move to server") {
         println "$CMD"
+        /*if(CMD != ""){
+            sshagent(credentials : ['Balakumaran']) {
+                sh "$CMD"
+            }
+        }*/
     }
 }
