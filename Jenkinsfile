@@ -139,9 +139,19 @@ node {
             input message: 'Kindly review current version code and approve the file movement of development server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
         }
 
+        /**
+         * move files into develpment server
+         */
+        
         sshagent(credentials : ['Balakumaran']) {
             sh "$DEV_CMD"
         }
+
+        /**
+         * Migrate Database
+         */
+        println "Start database Migration"
+        flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_dev'
     }
 
     stage("Move to server") {
