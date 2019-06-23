@@ -4,9 +4,7 @@ node {
     stage("checkout") {
         println "Checking out...."
         git url: 'https://github.com/balapkm/interface.git'
-    }
 
-    stage("last-changes") {
         println "Get last commit changes.."
         CMD = ""
 
@@ -28,6 +26,10 @@ node {
                 }
             }
         }
+    }
+
+    stage("last-changes") {
+         println "$CMD"
     }
 
     stage("Move to server") {
