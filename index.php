@@ -16,7 +16,8 @@ $dbName     = "interface";
 $UID_Number = 0;
 $dataArray = array();
 
-$conn = new mysqli($servername,$username,$password,$dbName);
+$config = parse_ini_file("./config.ini", true);
+$conn = new mysqli($config['DATA_BASE']['HOST'], $config['DATA_BASE']['USERNAME'], $config['DATA_BASE']['AUTHENTICATION'], $config['DATA_BASE']['DATABASENAME']);
 // Check connection
 if ($conn->connect_error) {
    die("Connection failed: " . $conn->connect_error);
