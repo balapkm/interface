@@ -37,7 +37,7 @@ node {
         git url: 'https://github.com/balapkm/interface.git'
 
         println "Get last commit changes.."
-        generateCMDForServer()
+        CMD = generateCMDForServer()
 
     }
 
