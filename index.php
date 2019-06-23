@@ -9,7 +9,7 @@ if (!($_SERVER['PHP_AUTH_USER'] == $user && $_SERVER['PHP_AUTH_PW'] == $password
     exit;
 }
 
-$servername = "localhosts";
+$servername = "localhost";
 $username   = "root";
 $password   = "infiniti";
 $dbName     = "interface";

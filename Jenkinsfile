@@ -7,7 +7,7 @@ node {
     }
 
     stage("last-changes") {
-        println "Get last commit changes.."
+        println "Get last commit changes"
         CMD = ""
 
         def changeLogSets = currentBuild.changeSets
