@@ -18,6 +18,8 @@ def generateCMDForServer(serverName){
      */
     def DEV_DEST  = "/var/www/html/interface_dev"
     def TEST_DEST = "/var/www/html/interface_test"
+    def UAT_DEST = "/var/www/html/interface_test"
+    def LIVE_DEST = "/var/www/html/interface_test"
 
     def COMMAND  = ""
     def DEST_DIR = ""
@@ -27,6 +29,14 @@ def generateCMDForServer(serverName){
 
     if(serverName == "TEST") {
         DEST_DIR = "$TEST_DEST";
+    }
+
+    if(serverName == "UAT") {
+        DEST_DIR = "$UAT_DEST";
+    }
+
+    if(serverName == "LIVE") {
+        DEST_DIR = "$LIVE_DEST";
     }
 
     def changeLogSets = currentBuild.changeSets

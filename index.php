@@ -138,7 +138,7 @@ if(count($_GET) > 0)
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title> Interface</title>
+      <title>Interface</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -161,7 +161,7 @@ if(count($_GET) > 0)
       <nav class="navbar navbar-inverse navbar-fixed-top">
          <div class="container-fluid">
             <div class="navbar-header">
-               <a class="navbar-brand" href="#">CommonWebservice Interface</a>
+               <a class="navbar-brand" href="#">Interface</a>
             </div>
             <ul class="nav navbar-nav">
                <li class="active"><a href="#">IOCL Database Interface</a></li>
