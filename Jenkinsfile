@@ -1,18 +1,26 @@
+/**
+ * generte command server
+ * @method      generateCMDForServer
+ * @Author_name G.Balakumaran
+ * @datetime    2019-06-23T19:26:30+0530
+ * @param       serverName [description]
+ * @return      [description]
+ */
+
 def generateCMDForServer(serverName){
     /**
      * Dev server Configuration
      */
     def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
-    def DEV_DEST  = "/var/www/html/circleci"
+    def DEV_DEST  = "/var/www/html/interface_dev"
     def DEV_CMD   = ""
 
     def COMMAND  = ""
     def DEST_DIR = ""
     if(serverName == "DEV") {
         DEST_DIR = "$DEV_DEST";
-        println "$DEST_DIR";
     }
-    println "$DEST_DIR";
+
     def changeLogSets = currentBuild.changeSets
     for (int i = 0; i < changeLogSets.size(); i++) {
         def entries = changeLogSets[i].items
@@ -34,13 +42,67 @@ def generateCMDForServer(serverName){
     return COMMAND
 }
 
+/**
+ * send email
+ * @method      sendEmailNotification
+ * @Author_name G.Balakumaran
+ * @datetime    2019-06-23T19:28:36+0530
+ * @param       subject subject
+ * @param       body bosy
+ * @param       to to
+ * @return      void
+ */
+
+def sendEmailNotification(subject,body){
+
+    /**
+     * Dev server Configuration
+     */
+    def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
+
+    def TO_EMAIL  = ""
+    if(serverName == "DEV") {
+        TO_EMAIL = "$DEV_EMAIL";
+    }
+
+
+    emailext (
+            subject: subject,
+            body: body,
+            to: "$TO_EMAIL",
+            from: "balakumaran.raji@gmail.com"
+        )
+}
+/**
+ * create stages
+ */
+
 node {
     stage("checkout") {
+        /**
+         * checking out
+         */
+        
         println "Checking out...."
         git url: 'https://github.com/balapkm/interface.git'
 
+        /**
+         * generate last commit changes
+         */
+        
         println "Get last commit changes.."
         DEV_CMD = generateCMDForServer("DEV")
+
+        /**
+         * send start job emails
+         */
+        
+        println "Send Email Notification for start Job"
+        def body = """Hi team,
+           '${env.JOB_NAME} ${env.BUILD_NUMBER}' is started successfully and refer below console output
+           ${env.BUILD_URL}
+        """
+        sendEmailNotification("Start Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body)
     }
 
     stage("last-changes") {
