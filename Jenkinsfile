@@ -109,6 +109,7 @@ node {
         println "Send Email Notification for start Job"
         def body = """Hi team,
     The Job Name (${env.JOB_NAME} - ${env.BUILD_NUMBER}) is started successfully and refer below link about this job
+    
     ${env.BUILD_URL}
         """
         sendEmailNotification("Start Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
@@ -124,8 +125,9 @@ node {
         println "Send Email Notification team leader for apporval of file movement of development server.."
         def body = """Hi Team Leader,
     Kindly review current version code and approve the file movement of development server?
-    Commit Changes - ${env.BUILD_URL}/changes
-    Approve/Reject - ${env.BUILD_URL}/input
+
+    Commit Changes - ${env.BUILD_URL}changes
+    Approve/Reject - ${env.BUILD_URL}input
         """
         sendEmailNotification("Development Server approval - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
 
@@ -136,14 +138,16 @@ node {
         timeout(time: 5, unit: 'DAYS') {
             input message: 'Kindly review current version code and approve the file movement of development server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
         }
+
+        sshagent(credentials : ['Balakumaran']) {
+            sh "$DEV_CMD"
+        }
     }
 
     stage("Move to server") {
         println "$DEV_CMD"
         /*if(CMD != ""){
-            sshagent(credentials : ['Balakumaran']) {
-                sh "$CMD"
-            }
+            
         }*/
     }
 }
