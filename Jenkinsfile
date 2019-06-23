@@ -1,3 +1,5 @@
+def DEV_CMD   = ""
+
 /**
  * generte command server
  * @method      generateCMDForServer
@@ -13,7 +15,6 @@ def generateCMDForServer(serverName){
      */
     def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
     def DEV_DEST  = "/var/www/html/interface_dev"
-    def DEV_CMD   = ""
 
     def COMMAND  = ""
     def DEST_DIR = ""
@@ -92,6 +93,14 @@ node {
         
         println "Get last commit changes.."
         DEV_CMD = generateCMDForServer("DEV")
+        println "$DEV_CMD"
+
+        /**
+         * checking last commit is there
+         */
+        if(DEV_CMD == "") {
+            error("No files are committed");
+        }
 
         /**
          * send start job emails
