@@ -18,8 +18,8 @@ def generateCMDForServer(serverName){
      */
     def DEV_DEST  = "/var/www/html/interface_dev"
     def TEST_DEST = "/var/www/html/interface_test"
-    def UAT_DEST = "/var/www/html/interface_test"
-    def LIVE_DEST = "/var/www/html/interface_test"
+    def UAT_DEST = "/var/www/html/interface_uat"
+    def LIVE_DEST = "/var/www/html/interface_live"
 
     def COMMAND  = ""
     def DEST_DIR = ""
