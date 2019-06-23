@@ -32,7 +32,7 @@ def generateCMDForServer(serverName){
                 def file = files[k]
                 println "Files List -> $file.path"
                 if(COMMAND != ""){
-                    COMMAND = "$CMD && scp  -o StrictHostKeyChecking=no $WORKSPACE/$file.path ubuntu@ec2-13-232-76-112.ap-south-1.compute.amazonaws.com:$DEST_DIR/$file.path"
+                    COMMAND = "$COMMAND && scp  -o StrictHostKeyChecking=no $WORKSPACE/$file.path ubuntu@ec2-13-232-76-112.ap-south-1.compute.amazonaws.com:$DEST_DIR/$file.path"
                 }else{
                     COMMAND = "scp  -o StrictHostKeyChecking=no $WORKSPACE/$file.path ubuntu@ec2-13-232-76-112.ap-south-1.compute.amazonaws.com:$DEST_DIR/$file.path"
                 }
