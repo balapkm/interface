@@ -3,7 +3,6 @@ def CMD
 node {
     stage("checkout") {
         println "Checking out...."
-        echo "Checking out...."
         git url: 'https://github.com/balapkm/circleci.git'
 
         def changeLogSets = currentBuild.changeSets
@@ -23,7 +22,9 @@ node {
                         CMD = "scp  -o StrictHostKeyChecking=no $WORKSPACE/$file.path ubuntu@ec2-13-232-76-112.ap-south-1.compute.amazonaws.com:$dest_dir/$file.path"
                     }
                 }
-          }
+            }
         }
+
+        println "$CMD"
     }
 }
