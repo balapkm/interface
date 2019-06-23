@@ -1,4 +1,7 @@
-def DEV_CMD   = ""
+def DEV_CMD    = ""
+def TEST_CMD   = ""
+def UAT_CMD    = ""
+def LIVE_CMD   = ""
 
 /**
  * generte command server
@@ -96,8 +99,14 @@ node {
          */
         
         println "Get last commit changes.."
-        DEV_CMD = generateCMDForServer("DEV")
+        DEV_CMD  = generateCMDForServer("DEV")
+        TEST_CMD = generateCMDForServer("TEST")
+        UAT_CMD  = generateCMDForServer("UAT")
+        LIVE_CMD = generateCMDForServer("LIVE")
         println "$DEV_CMD"
+        println "$TEST_CMD"
+        println "$UAT_CMD"
+        println "$LIVE_CMD"
 
         /**
          * checking last commit is there
@@ -159,7 +168,7 @@ node {
     }
 
     stage("Deploy - Testing Server") {
-        println "$DEV_CMD"
+        println "$TEST_CMD"
 
         /**
          * Send Email Notification for Manager for apporval
@@ -183,11 +192,11 @@ node {
         }
 
         /**
-         * move files into develpment server
+         * move files into testing server
          */
         
         sshagent(credentials : ['Balakumaran']) {
-            sh "$DEV_CMD"
+            sh "$TEST_CMD"
         }
 
         /**
@@ -195,5 +204,83 @@ node {
          */
         println "Start database Migration"
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_test'
+    }
+
+    stage("Deploy - UAT Server") {
+        println "$UAT_CMD"
+
+        /**
+         * Send Email Notification for Manager for apporval
+         */
+        
+        println "Send Email Notification Testing Team for apporval of file movement of UAT server.."
+        def body = """Dear Testing Team,
+    Kindly approve the file movement of UAT server?
+
+    Commit Changes - ${env.BUILD_URL}changes
+    Approve/Reject - ${env.BUILD_URL}input
+        """
+        sendEmailNotification("UAT Server approval - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
+
+        /**
+         * approval for move file for development server
+         */
+        
+        timeout(time: 5, unit: 'DAYS') {
+            input message: 'Kindly approve the file movement of UAT server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
+        }
+
+        /**
+         * move files into UAT server
+         */
+        
+        sshagent(credentials : ['Balakumaran']) {
+            sh "$UAT_CMD"
+        }
+
+        /**
+         * Migrate Database
+         */
+        println "Start database Migration"
+        flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_uat'
+    }
+
+    stage("Deploy - LIVE Server") {
+        println "$LIVE_CMD"
+
+        /**
+         * Send Email Notification for Manager for apporval
+         */
+        
+        println "Send Email Notification Client for apporval of file movement of LIVE server.."
+        def body = """Dear Client,
+    Kindly approve the file movement of LIVE server?
+
+    Commit Changes - ${env.BUILD_URL}changes
+    Approve/Reject - ${env.BUILD_URL}input
+        """
+        sendEmailNotification("LIVE Server approval - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
+
+        /**
+         * approval for move file for development server
+         */
+        
+        timeout(time: 5, unit: 'DAYS') {
+            input message: 'Kindly approve the file movement of LIVE server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
+        }
+
+        /**
+         * move files into LVIVE server
+         */
+        
+        sshagent(credentials : ['Balakumaran']) {
+            sh "$LIVE_CMD"
+        }
+
+        /**
+         * Migrate Database
+         */
+        println "Start database Migration"
+        flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_live'
     }
 }
