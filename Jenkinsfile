@@ -84,12 +84,12 @@ def sendEmailNotification(subject,body,serverName){
     }
 
 
-    // emailext (
-    //         subject: subject,
-    //         body: body,
-    //         to: "$TO_EMAIL",
-    //         from: "balakumaran.raji@gmail.com"
-    //     )
+    emailext (
+            subject: subject,
+            body: body,
+            to: "$TO_EMAIL",
+            from: "balakumaran.raji@gmail.com"
+        )
 }
 /**
  * create stages
@@ -175,6 +175,18 @@ node {
          */
         println "Start database Migration"
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_dev'
+
+        /**
+         * Success Messagae
+         */
+        
+        println "Success Messagae..!!"
+        def body = """Hi Team Leader,
+    File Moved Successfully in development server
+
+    Console Log - ${env.BUILD_URL}console
+        """
+        sendEmailNotification("Development Server File Moved Successfully - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 
     stage("Deploy - Testing Server") {
@@ -214,6 +226,18 @@ node {
          */
         println "Start database Migration"
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_test'
+
+        /**
+         * Success Messagae
+         */
+        
+        println "Success Messagae..!!"
+        def body = """Hi Team Leader,
+    File Moved Successfully in Testing server
+
+    Console Log - ${env.BUILD_URL}console
+        """
+        sendEmailNotification("Testing Server File Moved Successfully - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 
     stage("Deploy - UAT Server") {
@@ -253,6 +277,18 @@ node {
          */
         println "Start database Migration"
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_uat'
+
+        /**
+         * Success Messagae
+         */
+        
+        println "Success Messagae..!!"
+        def body = """Hi Testing Team,
+    File Moved Successfully in UAT server
+
+    Console Log - ${env.BUILD_URL}console
+        """
+        sendEmailNotification("UAT Server File Moved Successfully - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 
     stage("Deploy - LIVE Server") {
@@ -292,5 +328,17 @@ node {
          */
         println "Start database Migration"
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_live'
+
+        /**
+         * Success Messagae
+         */
+        
+        println "Success Messagae..!!"
+        def body = """Dear Client,
+    File Moved Successfully in Live server
+
+    Console Log - ${env.BUILD_URL}console
+        """
+        sendEmailNotification("Live Server File Moved Successfully- '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 }
