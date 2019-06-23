@@ -3,7 +3,7 @@ def CMD
 node {
     stage("checkout") {
         println "Checking out...."
-        git url: 'https://github.com/balapkm/circleci.git'
+        git url: 'https://github.com/balapkm/interface.git'
     }
 
     stage("last-changes") {
@@ -16,7 +16,6 @@ node {
             for (int j = 0; j < entries.length; j++) {
                 def entry = entries[j]
                 def files = new ArrayList(entry.affectedFiles)
-                CMD = ""
                 for (int k = 0; k < files.size(); k++) {
                     def file = files[k]
                     def dest_dir = "/var/www/html/circleci";
