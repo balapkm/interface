@@ -1,13 +1,12 @@
-/**
- * Dev server Configuration
- */
-def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
-def DEV_DEST  = "/var/www/html/circleci"
-def DEV_CMD   = ""
-
 def generateCMDForServer(serverName){
-    def COMMAND = ""
+    /**
+     * Dev server Configuration
+     */
+    def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
+    def DEV_DEST  = "/var/www/html/circleci"
+    def DEV_CMD   = ""
 
+    def COMMAND = ""
     if(serverName == "DEV") {
         def dest_dir = "$DEV_DEST";
     }
