@@ -13,13 +13,17 @@ def generateCMDForServer(serverName){
     /**
      * Dev server Configuration
      */
-    def DEV_EMAIL = "balakumaran.g@infinitisoftware.net"
     def DEV_DEST  = "/var/www/html/interface_dev"
+    def TEST_DEST = "/var/www/html/interface_test"
 
     def COMMAND  = ""
     def DEST_DIR = ""
     if(serverName == "DEV") {
         DEST_DIR = "$DEV_DEST";
+    }
+
+    if(serverName == "TEST") {
+        DEST_DIR = "$TEST_DEST";
     }
 
     def changeLogSets = currentBuild.changeSets
@@ -67,12 +71,12 @@ def sendEmailNotification(subject,body,serverName){
     }
 
 
-    emailext (
-            subject: subject,
-            body: body,
-            to: "$TO_EMAIL",
-            from: "balakumaran.raji@gmail.com"
-        )
+    // emailext (
+    //         subject: subject,
+    //         body: body,
+    //         to: "$TO_EMAIL",
+    //         from: "balakumaran.raji@gmail.com"
+    //     )
 }
 /**
  * create stages
@@ -115,7 +119,7 @@ node {
         sendEmailNotification("Start Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
     }
 
-    stage("Deploy - Development") {
+    stage("Deploy - Development Server") {
         println "$DEV_CMD"
 
         /**
@@ -154,10 +158,42 @@ node {
         flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_dev'
     }
 
-    stage("Move to server") {
+    stage("Deploy - Testing Server") {
         println "$DEV_CMD"
-        /*if(CMD != ""){
-            
-        }*/
+
+        /**
+         * Send Email Notification for Manager for apporval
+         */
+        
+        println "Send Email Notification Manager for apporval of file movement of testing server.."
+        def body = """Dear Manager,
+    Kindly approve the file movement of testing server?
+
+    Commit Changes - ${env.BUILD_URL}changes
+    Approve/Reject - ${env.BUILD_URL}input
+        """
+        sendEmailNotification("Testing Server approval - '${env.JOB_NAME} ${env.BUILD_NUMBER}'",body,"DEV")
+
+        /**
+         * approval for move file for development server
+         */
+        
+        timeout(time: 5, unit: 'DAYS') {
+            input message: 'Kindly approve the file movement of testing server?', ok: 'Approve', parameters: [string(defaultValue: '', description: '', name: 'Approve/Reject Reason', trim: false)], submitter: 'balakumaran'
+        }
+
+        /**
+         * move files into develpment server
+         */
+        
+        sshagent(credentials : ['Balakumaran']) {
+            sh "$DEV_CMD"
+        }
+
+        /**
+         * Migrate Database
+         */
+        println "Start database Migration"
+        flywayrunner commandLineArgs: '', credentialsId: '29094ff4-b5ea-47ad-8491-6fdcd0756608', flywayCommand: 'migrate', installationName: 'Flyway', locations: "filesystem:$WORKSPACE/sql", url: 'jdbc:mysql://localhost:3306/interface_test'
     }
 }
