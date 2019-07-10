@@ -161,7 +161,7 @@ if(count($_GET) > 0)
       <nav class="navbar navbar-inverse navbar-fixed-top">
          <div class="container-fluid">
             <div class="navbar-header">
-               <a class="navbar-brand" href="#">My Hello Interface</a>
+               <a class="navbar-brand" href="#">My Hello Inthherface</a>
             </div>
             <ul class="nav navbar-nav">
                <li class="active"><a href="#">IOCL Interface</a></li>
