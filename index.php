@@ -1,5 +1,5 @@
 <?php
-$user = 'wsadmin';
+$user = 'wsadmin  ';
 $password = 'wsadmin@123';
 if (!($_SERVER['PHP_AUTH_USER'] == $user && $_SERVER['PHP_AUTH_PW'] == $password)) 
 {
