@@ -1,3 +1,3 @@
 <?php
-echo "ads";
+echo "ads ddd";
 ?>
