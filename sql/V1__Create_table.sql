@@ -3,7 +3,7 @@
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO dd';
 
 DROP TABLE IF EXISTS `common_iocl_log_details`;
 CREATE TABLE `common_iocl_log_details` (
