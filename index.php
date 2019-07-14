@@ -138,7 +138,7 @@ if(count($_GET) > 0)
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>Interface ccc Master asjdn</title>
+      <title>Interface ccc</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
