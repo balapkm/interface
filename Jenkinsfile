@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'test'
-        input 'Do you'
+        input message: 'Do you', submitter: 'team_leader'
       }
     }
   }
